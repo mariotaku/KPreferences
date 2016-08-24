@@ -52,8 +52,9 @@ val str = prefs[nullableStringPrefs] // This is a nullable string
 
 ````kotlin
 class KDateKey(key: String, def: Date) : KSimpleKey<Date>(key, def) {
-    override fun write(editor: SharedPreferences.Editor, value: Date) {
+    override fun write(editor: SharedPreferences.Editor, value: Date): Boolean {
         editor.putLong(key, value.time)
+        return true
     }
 
     override fun read(preferences: SharedPreferences): Date {

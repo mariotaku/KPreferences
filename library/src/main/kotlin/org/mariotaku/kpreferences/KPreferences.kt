@@ -13,8 +13,9 @@ class KPreferences(internal val preferences: SharedPreferences) {
 
     operator fun <T> set(key: KPreferenceKey<T>, value: T) {
         val editor = preferences.edit()
-        key.write(editor, value)
-        editor.apply()
+        if (key.write(editor, value)) {
+            editor.apply()
+        }
     }
 
     operator fun <T> contains(key: KPreferenceKey<T>): Boolean {
@@ -25,20 +26,28 @@ class KPreferences(internal val preferences: SharedPreferences) {
         return preferences.contains(key)
     }
 
-    fun edit(action: Editor.() -> Unit) {
+    fun edit(action: Editor.() -> Unit): Boolean {
         val editor = Editor(preferences.edit())
         action(editor)
-        editor.apply()
+        return editor.apply()
     }
 
     class Editor(internal val editor: SharedPreferences.Editor) {
+
+        internal var cancelled: Boolean = false
 
         operator fun <T> set(key: KPreferenceKey<T>, value: T) {
             key.write(editor, value)
         }
 
-        fun apply() {
+        fun apply(): Boolean {
+            if (cancelled) return false
             editor.apply()
+            return true
+        }
+
+        fun cancel() {
+            cancelled = true
         }
     }
 
