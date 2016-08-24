@@ -65,3 +65,24 @@ class KDateKey(key: String, def: Date) : KSimpleKey<Date>(key, def) {
 val datePrefs = KDateKey("name", Date())
 val date = prefs[datePrefs] // This is a date object
 ````
+
+## Get it
+
+Add JitPack repository in your build.gradle file
+
+````
+allprojects {
+    repositories {
+        ...
+        maven { url "https://jitpack.io" }
+    }
+}
+````
+
+Add this library
+
+````
+dependencies {
+    compile 'com.github.mariotaku:KPreferences:(latest version)'
+}
+````
