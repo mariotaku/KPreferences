@@ -1,6 +1,6 @@
 # KPreferences
 
-Better SharedPreferences wrapper
+Better SharedPreferences wrapper, like [SwiftyUserDefaults](https://github.com/radex/SwiftyUserDefaults)
 
 ---
 
