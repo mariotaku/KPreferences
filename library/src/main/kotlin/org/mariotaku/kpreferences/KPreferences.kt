@@ -35,15 +35,17 @@ class KPreferences(internal val preferences: SharedPreferences) {
     class Editor(internal val editor: SharedPreferences.Editor) {
 
         internal var cancelled: Boolean = false
+        internal var changed: Boolean = false
 
         operator fun <T> set(key: KPreferenceKey<T>, value: T) {
             key.write(editor, value)
+            changed = true
         }
 
         fun apply(): Boolean {
             if (cancelled) return false
             editor.apply()
-            return true
+            return changed
         }
 
         fun cancel() {
