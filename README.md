@@ -87,3 +87,24 @@ dependencies {
     compile 'com.github.mariotaku:KPreferences:(latest version)'
 }
 ````
+
+## License
+
+KPreferences is available under the Apache license, version 2. See the LICENSE file for more info.
+
+
+## Donation
+
+**Donation methods**
+
+PayPal & AliPay: `val email = "mariotaku.lee@gmail.com"`
+
+Bitcoin: `1Ag37rPeVUKPHZa6RrsnbkCCz1Envx8xxZ`
+
+Buy me a ~~bread~~ [game](http://steamcommunity.com/id/mariotaku/wishlist) or anything you want :)
+
+[帮我支付宝账户里随便加点钱](https://twitter.com/xmxsuperstar/status/724094631621750785)
+
+---
+
+Made with ❤️ by <a href="https://mariotaku.org/"><img src="resources/nyan_sakamoto_icon.png" height="20"></a>
