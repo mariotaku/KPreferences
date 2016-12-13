@@ -42,7 +42,7 @@ class KPreferences(internal val preferences: SharedPreferences) {
             changed = true
         }
 
-        fun apply(): Boolean {
+        internal fun apply(): Boolean {
             if (cancelled) return false
             editor.apply()
             return changed
