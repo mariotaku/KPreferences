@@ -16,6 +16,10 @@ operator fun <T> SharedPreferences.set(key: KPreferenceKey<T>, value: T) {
     }
 }
 
+operator fun <T> SharedPreferences.contains(key: KPreferenceKey<T>): Boolean {
+    return key.contains(this)
+}
+
 operator fun <T> SharedPreferences.Editor.set(key: KPreferenceKey<T>, value: T) {
     key.write(this, value)
 }
