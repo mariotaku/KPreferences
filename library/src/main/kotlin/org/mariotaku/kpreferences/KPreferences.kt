@@ -1,5 +1,6 @@
 package org.mariotaku.kpreferences
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.SharedPreferences
 
@@ -26,6 +27,7 @@ class KPreferences(internal val preferences: SharedPreferences) {
         return preferences.contains(key)
     }
 
+    @SuppressLint("CommitPrefEdits")
     fun edit(action: Editor.() -> Unit): Boolean {
         val editor = Editor(preferences.edit())
         action(editor)

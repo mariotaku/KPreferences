@@ -25,31 +25,36 @@ class KBooleanKey(key: String, def: Boolean) : KSimpleKey<Boolean>(key, def) {
 
 }
 
-class KIntKey(key: String, def: Int) : KSimpleKey<Int>(key, def) {
+class KIntKey(key: String, def: Int, val range: IntRange? = null) : KSimpleKey<Int>(key, def) {
     override fun write(editor: SharedPreferences.Editor, value: Int): Boolean {
         editor.putInt(key, value)
         return true
     }
 
     override fun read(preferences: SharedPreferences): Int {
-        return preferences.getInt(key, def)
+        val value = preferences.getInt(key, def)
+        if (range == null) return value
+        return value.coerceIn(range)
     }
 
 }
 
-class KLongKey(key: String, def: Long) : KSimpleKey<Long>(key, def) {
+class KLongKey(key: String, def: Long, val range: LongRange? = null) : KSimpleKey<Long>(key, def) {
     override fun write(editor: SharedPreferences.Editor, value: Long): Boolean {
         editor.putLong(key, value)
         return true
     }
 
     override fun read(preferences: SharedPreferences): Long {
-        return preferences.getLong(key, def)
+        val value = preferences.getLong(key, def)
+        if (range == null) return value
+        return value.coerceIn(range)
     }
 
 }
 
-class KFloatKey(key: String, def: Float) : KSimpleKey<Float>(key, def) {
+class KFloatKey(key: String, def: Float,
+        val range: ClosedFloatingPointRange<Float>? = null) : KSimpleKey<Float>(key, def) {
     override fun write(editor: SharedPreferences.Editor, value: Float): Boolean {
         editor.putFloat(key, value)
         return true
@@ -60,25 +65,31 @@ class KFloatKey(key: String, def: Float) : KSimpleKey<Float>(key, def) {
     }
 }
 
-class KStringKey(key: String, def: String) : KSimpleKey<String>(key, def) {
+class KStringKey(key: String, def: String,
+        private val validation: ((String) -> Boolean)? = null) : KSimpleKey<String>(key, def) {
     override fun write(editor: SharedPreferences.Editor, value: String): Boolean {
         editor.putString(key, value)
         return true
     }
 
     override fun read(preferences: SharedPreferences): String {
-        return preferences.getString(key, def) ?: def
+        val value = preferences.getString(key, def) ?: return def
+        if (validation == null) return value
+        return if (validation.invoke(value)) value else def
     }
 }
 
-class KNullableStringKey(key: String, def: String?) : KSimpleKey<String?>(key, def) {
+class KNullableStringKey(key: String, def: String?,
+        private val validation: ((String?) -> Boolean)? = null) : KSimpleKey<String?>(key, def) {
     override fun write(editor: SharedPreferences.Editor, value: String?): Boolean {
         editor.putString(key, value)
         return true
     }
 
     override fun read(preferences: SharedPreferences): String? {
-        return preferences.getString(key, def)
+        val value = preferences.getString(key, def)
+        if (validation == null) return value
+        return if (validation.invoke(value)) value else def
     }
 }
 

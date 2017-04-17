@@ -25,8 +25,8 @@ operator fun <T> SharedPreferences.Editor.set(key: KPreferenceKey<T>, value: T) 
     key.write(this, value)
 }
 
+@SuppressLint("CommitPrefEdits")
 fun SharedPreferences.edit(action: KPreferences.Editor.() -> Unit): Boolean {
-    @SuppressLint("CommitPrefEdits")
     val editor = KPreferences.Editor(edit())
     action(editor)
     return editor.apply()
